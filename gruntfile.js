@@ -26,15 +26,17 @@ module.exports = function(grunt) {
             install: {
                 options: {
                     layout: 'byComponent',
-                    targetDir: 'www/js/lib/'
+                    targetDir: 'www/src/libs/'
                 }
             }
         },
 
         copy: {
-            lib: {
-                src: 'lib/**',
-                dest: 'www/js/'
+            localLibs: {
+                cwd: 'src',
+                expand: true,
+                src: ["**/*"],
+                dest: 'www/src/libs'
             },
             images: {
                 cwd: 'src/images',
@@ -53,14 +55,14 @@ module.exports = function(grunt) {
                 cwd: 'src/templates',
                 expand: true,
                 src: ['helpers/**'],
-                dest: 'www/js/templates/'
+                dest: 'www/src/templates/'
             },
             //FIXME: Should be part of the require deployment
             templates: {
                 cwd: 'tmp/templates/src/',
                 expand: true,
                 src: ['templates/**/*.js'],
-                dest: 'www/js/'
+                dest: 'www/src/'
             },
         },
 
@@ -89,10 +91,10 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    mainConfigFile: "./src/app/index.js",
+                    mainConfigFile: "./src/js/app.js",
                     findNestedDependencies: true,
-                    appDir: 'src/app',
-                    dir: 'www/js/app',
+                    appDir: 'src/js',
+                    dir: 'www/src/js',
                     optimize: 'none',
                     generateSourceMaps: true,
                     preserveLicenseComments: false,
@@ -137,7 +139,7 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            build: ['buildtmp', 'tmp', 'www/css', 'www/js', 'www/images', 'jslint.xml', 'xunit.xml'],
+            build: ['buildtmp', 'tmp', 'www/css', 'www/src', 'www/images', 'jslint.xml', 'xunit.xml'],
             bower: ['bower_components']
         },
 
@@ -242,13 +244,21 @@ module.exports = function(grunt) {
                 }
             }
         },
-   });
 
+        nodewebkit: {
+            options: {
+                app_name: "nodewebkitapp",
+                build_dir: "./webkitbuilds",
+                win: true,
+                mac: false
+            },
+            src: ["www/**/*"] 
+        }
+   });
 
     // Tasks
     /* jshint scripturl: true */
     grunt.registerTask('test', [
-        'extend',
         'jshint',
         'connect:test',
         'mocha:default'
@@ -277,6 +287,7 @@ module.exports = function(grunt) {
         'connect:test',
         'mocha:ci',
         'jslint:ci',
+        "nodewebkit"
     ]);
 
     grunt.registerTask('default', [
