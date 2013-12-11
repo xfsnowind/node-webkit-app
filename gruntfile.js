@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
     // Load libs
-    grunt.loadNpmTasks('grunt-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 
         copy: {
             localLibs: {
-                cwd: 'src',
+                cwd: 'localLibs',
                 expand: true,
                 src: ["**/*"],
                 dest: 'www/src/libs'
@@ -91,17 +91,20 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    mainConfigFile: "./src/js/app.js",
+                    mainConfigFile: "src/js/app.js",
                     findNestedDependencies: true,
+                    skipDirOptimize: true,
                     appDir: 'src/js',
                     dir: 'www/src/js',
                     optimize: 'none',
-                    generateSourceMaps: true,
                     preserveLicenseComments: false,
                     keepBuildDir: false,
                     inlineText: true,
                     removeCombined: true,
                     stubModules: ['text']
+                // },
+                // paths: {
+                //     jquery: "../libs/jquery/jquery"
                 }
             }
         },
@@ -139,7 +142,7 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            build: ['buildtmp', 'tmp', 'www/css', 'www/src', 'www/images', 'jslint.xml', 'xunit.xml'],
+            build: ['buildtmp', 'tmp', 'www/css', 'www/src', 'www/images', 'jslint.xml', 'xunit.xml', 'webkitbuilds/releases'],
             bower: ['bower_components']
         },
 
@@ -167,10 +170,6 @@ module.exports = function(grunt) {
             templates: {
                 files: ['src/templates/**'],
                 tasks: ['handlebars_requirejs', 'copy:templates']
-            },
-            lib: {
-                files: ['lib/**'],
-                tasks: ['copy:lib']
             },
             stylesheets: {
                 files: ['src/styles/**'],
@@ -213,22 +212,22 @@ module.exports = function(grunt) {
                     port: 9002,
                     base: '.'
                 }
-            },
-            proxies: [
-                //Proxy urls starting with /touch to nesstar-dev to prevent
-                //same-origin problems when talking to rest server.
-                {
-                    // context: '/touch',
-                    // host: 'nesstar-dev.nsd.uib.no',
-                    // port: 80,
-                    context: '/',
-                    host: 'localhost',
-                    port: 3000,
-                    https: false,
-                    changeOrigin: false,
-                    xforward: false
-                }
-            ]
+            }
+            // proxies: [
+            //     //Proxy urls starting with /touch to nesstar-dev to prevent
+            //     //same-origin problems when talking to rest server.
+            //     {
+            //         // context: '/touch',
+            //         // host: 'nesstar-dev.nsd.uib.no',
+            //         // port: 80,
+            //         context: '/',
+            //         host: 'localhost',
+            //         port: 3000,
+            //         https: false,
+            //         changeOrigin: false,
+            //         xforward: false
+            //     }
+            // ]
         },
 
         mocha: {
@@ -269,15 +268,14 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
+        'copy',
         'handlebars_requirejs',
         'requirejs',
         'sass',
-        'copy',
         'bower'
     ]);
 
     grunt.registerTask('server', [
-        'configureProxies',
         'connect:server',
         'watch'
     ]);

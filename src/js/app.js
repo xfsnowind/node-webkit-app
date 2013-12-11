@@ -1,19 +1,11 @@
-require.config({
+/*global requirejs, require */
+requirejs.config({
     baseUrl: "src/js",
     paths: {
         templates: "../templates",
-        jquery: [
-            "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min",
-            "../lib/jquery/jquery"
-        ],
-        handlebars: [
-            "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min",
-            "../lib/handlebars/handlebars"
-        ],
-        lodash: [
-            "//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min",
-            "../lib/lodash/lodash.compat"
-        ]
+        jquery:"//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min",
+        handlebars: "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min",
+        lodash: "//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min"
     },
     shim: {
         jquery: {

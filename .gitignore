@@ -8,7 +8,7 @@ coverage.html
 bower_components
 node_modules
 tags
-www/js/
+www/src/
 www/css/
 www/images
 www/favicon.ico
