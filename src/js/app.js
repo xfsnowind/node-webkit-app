@@ -3,7 +3,7 @@ requirejs.config({
     baseUrl: "src/js",
     paths: {
         templates: "../templates",
-        jquery:"//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min",
+        jquery: "//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min",
         handlebars: "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min",
         lodash: "//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.1.0/lodash.min"
     },
