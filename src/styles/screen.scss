@@ -2,8 +2,29 @@
 }
 
 #screen {
-    height: 30em;
-    width: 40em;
-    background-image:url("../images/grass.png");
+    height: 480px;
+    width: 640px;
+    background-image: url("../images/grass.png");
     background-repeat: repeat;
+    z-index: auto;
+}
+
+#bunny {
+  background-image: url("../images/dude.png");
+  height: 46px;
+  width: 64px;
+  position: absolute;
+  left: 6em;
+  top: 6em;
+  z-index: 3;
+}
+
+div.castle {
+  background-image: url("../images/castle.png");
+  height: 105px;
+  width: 109px;
+  position: relative;
+  left: 0;
+  top: 30px;
+  z-index: 2;
 }

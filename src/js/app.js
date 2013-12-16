@@ -30,7 +30,7 @@ requirejs.config({
     }
 });
 
-require(["index"], function (index) {
+require(["main"], function (main) {
     "use strict";
-    index.init();
+    main.init();
 });
